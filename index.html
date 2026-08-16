@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>NEXORA — Advanced Mathematics &amp; Calculation Workspace</title>
+<meta name="description" content="NEXORA — a premium mathematics workspace: calculator, scientific functions, graphing, equations, matrices, statistics and more. CodeAlpha Frontend Development Internship, Task 2." />
+<meta name="theme-color" content="#5B4BDB" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ============ SKIP LINK ============ -->
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- ============ ONBOARDING ============ -->
+<div id="onboarding" class="onboarding" hidden>
+  <div class="onboarding-panel" role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
+    <button class="onboarding-skip" id="onboarding-skip" type="button">Skip</button>
+
+    <div class="onboarding-screens">
+      <section class="onboarding-screen" data-screen="0">
+        <div class="onboarding-visual onboarding-visual--grid">
+          <span class="floating-symbol sym-1">π</span>
+          <span class="floating-symbol sym-2">∫</span>
+          <span class="floating-symbol sym-3">Σ</span>
+          <span class="floating-symbol sym-4">√</span>
+          <span class="floating-symbol sym-5">∞</span>
+          <span class="floating-symbol sym-6">θ</span>
+          <span class="floating-symbol sym-7">Δ</span>
+          <div class="onboarding-calc-chip">
+            <span class="chip-expr">125 × 48</span>
+            <span class="chip-result">= 6000</span>
+          </div>
+        </div>
+        <h1 id="onboarding-title" class="onboarding-title">Welcome to NEXORA</h1>
+        <p class="onboarding-subtitle">Your personal mathematics workspace.</p>
+      </section>
+
+      <section class="onboarding-screen" data-screen="1" hidden>
+        <div class="onboarding-visual onboarding-visual--caps">
+          <div class="cap-card"><span data-lucide="calculator"></span>Scientific calculations</div>
+          <div class="cap-card"><span data-lucide="line-chart"></span>Graphing</div>
+          <div class="cap-card"><span data-lucide="sigma"></span>Equations</div>
+          <div class="cap-card"><span data-lucide="grid-3x3"></span>Matrices</div>
+          <div class="cap-card"><span data-lucide="bar-chart-3"></span>Statistics</div>
+        </div>
+        <h1 class="onboarding-title">From Calculation to Understanding</h1>
+        <p class="onboarding-subtitle">One workspace for every kind of mathematics.</p>
+      </section>
+
+      <section class="onboarding-screen" data-screen="2" hidden>
+        <div class="onboarding-visual onboarding-visual--workflow">
+          <ul class="workflow-list">
+            <li><span data-lucide="history"></span>Local calculation history</li>
+            <li><span data-lucide="star"></span>Favorites</li>
+            <li><span data-lucide="keyboard"></span>Keyboard shortcuts</li>
+            <li><span data-lucide="moon"></span>Dark mode</li>
+            <li><span data-lucide="eye"></span>Eye Comfort mode</li>
+            <li><span data-lucide="graduation-cap"></span>Study mode</li>
+          </ul>
+        </div>
+        <h1 class="onboarding-title">Built Around Your Workflow</h1>
+        <p class="onboarding-subtitle">Everything stays on this device, ready when you are.</p>
+      </section>
+    </div>
+
+    <div class="onboarding-footer">
+      <div class="onboarding-progress" aria-hidden="true">
+        <span class="dot" data-dot="0"></span>
+        <span class="dot" data-dot="1"></span>
+        <span class="dot" data-dot="2"></span>
+      </div>
+      <button class="btn btn-primary" id="onboarding-next" type="button">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FIRST-RUN PERSONALIZATION ============ -->
+<div id="personalize" class="modal-overlay" hidden>
+  <div class="modal modal-personalize" role="dialog" aria-modal="true" aria-labelledby="personalize-title">
+    <h2 id="personalize-title">How do you calculate?</h2>
+    <p class="modal-subtitle">This only tunes dashboard suggestions — nothing is sent anywhere.</p>
+    <div class="persona-grid">
+      <button class="persona-card" data-persona="student"><span data-lucide="graduation-cap"></span>Student</button>
+      <button class="persona-card" data-persona="developer"><span data-lucide="code-2"></span>Developer</button>
+      <button class="persona-card" data-persona="engineer"><span data-lucide="cog"></span>Engineer</button>
+      <button class="persona-card" data-persona="analytics"><span data-lucide="line-chart"></span>Data / Analytics</button>
+      <button class="persona-card" data-persona="general"><span data-lucide="user"></span>General</button>
+    </div>
+    <button class="btn btn-ghost" id="personalize-skip" type="button">Skip for now</button>
+  </div>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app-shell" id="app-shell">
+
+  <!-- Sidebar (desktop) -->
+  <aside class="sidebar" id="sidebar" aria-label="Primary">
+    <div class="sidebar-brand">
+      <span class="brand-mark" aria-hidden="true">N</span>
+      <span class="brand-text">NEXORA</span>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item" data-route="dashboard" aria-current="page"><span data-lucide="layout-dashboard"></span>Dashboard</button>
+      <button class="nav-item" data-route="calculator"><span data-lucide="calculator"></span>Calculator</button>
+      <button class="nav-item" data-route="graphing"><span data-lucide="line-chart"></span>Graphing</button>
+      <button class="nav-item" data-route="university"><span data-lucide="book-open"></span>University Math</button>
+      <button class="nav-item" data-route="matrix"><span data-lucide="grid-3x3"></span>Matrices</button>
+      <button class="nav-item" data-route="equations"><span data-lucide="sigma"></span>Equations</button>
+      <button class="nav-item" data-route="statistics"><span data-lucide="bar-chart-3"></span>Statistics</button>
+      <button class="nav-item" data-route="converters"><span data-lucide="repeat"></span>Converters</button>
+      <button class="nav-item" data-route="finance"><span data-lucide="landmark"></span>Finance</button>
+      <button class="nav-item" data-route="formulas"><span data-lucide="library"></span>Formula Library</button>
+      <button class="nav-item" data-route="study"><span data-lucide="graduation-cap"></span>Study Mode</button>
+      <button class="nav-item" data-route="assistant"><span data-lucide="sparkles"></span>Math Assistant</button>
+      <button class="nav-item" data-route="history"><span data-lucide="history"></span>History</button>
+      <button class="nav-item" data-route="favorites"><span data-lucide="star"></span>Favorites</button>
+      <button class="nav-item" data-route="settings"><span data-lucide="settings"></span>Settings</button>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn btn-block btn-outline" id="sidebar-command-btn" type="button">
+        <span data-lucide="command"></span> Command Center <kbd>Ctrl K</kbd>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main column -->
+  <div class="main-column">
+    <header class="topbar">
+      <button class="icon-btn mobile-only" id="drawer-toggle" aria-label="Open menu" title="Open menu"><span data-lucide="menu"></span></button>
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="topbar-search" aria-label="Open command center" title="Command Center (Ctrl K)"><span data-lucide="search"></span></button>
+        <button class="icon-btn" id="topbar-theme" aria-label="Toggle theme" title="Toggle theme"><span data-lucide="moon"></span></button>
+        <button class="icon-btn" id="topbar-settings" aria-label="Open settings" title="Settings"><span data-lucide="settings"></span></button>
+      </div>
+    </header>
+
+    <main id="main-content" class="main-content" tabindex="-1">
+      <!-- Views are injected here by js/router.js -->
+      <div id="view-root"></div>
+    </main>
+
+    <!-- Mobile bottom navigation -->
+    <nav class="bottom-nav mobile-only" aria-label="Primary mobile">
+      <button class="bottom-nav-item" data-route="dashboard" aria-current="page"><span data-lucide="layout-dashboard"></span><small>Home</small></button>
+      <button class="bottom-nav-item" data-route="calculator"><span data-lucide="calculator"></span><small>Calculator</small></button>
+      <button class="bottom-nav-item" data-route="explore"><span data-lucide="compass"></span><small>Explore</small></button>
+      <button class="bottom-nav-item" data-route="history"><span data-lucide="history"></span><small>History</small></button>
+      <button class="bottom-nav-item" data-route="settings"><span data-lucide="settings"></span><small>Settings</small></button>
+    </nav>
+  </div>
+</div>
+
+<!-- Mobile drawer for the full tool list -->
+<div class="drawer-overlay" id="drawer-overlay" hidden>
+  <div class="drawer" role="dialog" aria-modal="true" aria-label="All tools">
+    <div class="drawer-header">
+      <span class="brand-text">All Tools</span>
+      <button class="icon-btn" id="drawer-close" aria-label="Close menu"><span data-lucide="x"></span></button>
+    </div>
+    <nav class="drawer-nav" id="drawer-nav"></nav>
+  </div>
+</div>
+
+<!-- ============ COMMAND CENTER ============ -->
+<div class="modal-overlay" id="command-center" hidden>
+  <div class="command-palette" role="dialog" aria-modal="true" aria-label="Command Center">
+    <div class="command-input-row">
+      <span data-lucide="search"></span>
+      <input type="text" id="command-input" placeholder="Search calculators, tools, actions…" autocomplete="off" />
+      <kbd>Esc</kbd>
+    </div>
+    <ul id="command-results" class="command-results" role="listbox"></ul>
+  </div>
+</div>
+
+<!-- ============ TOASTS ============ -->
+<div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+<!-- Templates -->
+<template id="tpl-empty-state">
+  <div class="empty-state">
+    <div class="empty-state-icon"><span data-lucide="sparkles"></span></div>
+    <h3 class="empty-title"></h3>
+    <p class="empty-desc"></p>
+  </div>
+</template>
+
+<script src="js/vendor/math.js"></script>
+<script src="js/vendor/lucide.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/state.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/onboarding.js"></script>
+<script src="js/calculator.js"></script>
+<script src="js/scientific.js"></script>
+<script src="js/graphing.js"></script>
+<script src="js/equations.js"></script>
+<script src="js/matrix.js"></script>
+<script src="js/statistics.js"></script>
+<script src="js/converters.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/formulas.js"></script>
+<script src="js/study.js"></script>
+<script src="js/assistant.js"></script>
+<script src="js/history.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/commandcenter.js"></script>
+<script src="js/router.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

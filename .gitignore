@@ -1,0 +1,28 @@
+# NEXORA — ignore rules
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment / secrets — never commit these
+.env
+.env.*
+*.pem
+*.key
+secrets.json
+
+# Dependencies (none required, but ignored if a dev ever adds tooling)
+node_modules/
+
+# Build artifacts
+dist/
+build/
