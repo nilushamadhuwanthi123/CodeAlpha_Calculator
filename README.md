@@ -36,7 +36,11 @@ NEXORA combines several mathematical tools behind one consistent design system:
 
 ## Screenshots
 
-_Add screenshots of the Dashboard, Calculator, Graphing, and Matrix views here before publishing._
+| | |
+|---|---|
+| ![Dashboard (Light)](screenshots/dashboard-light.png) | ![Dashboard (Dark)](screenshots/dashboard-dark.png) |
+| ![Basic Calculator](screenshots/calculator-basic.png) | ![Scientific Calculator](screenshots/calculator-scientific.png) |
+| ![Graphing](screenshots/graphing.png) | ![Matrix Calculator](screenshots/matrix.png) |
 
 ## Technology
 
