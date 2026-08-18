@@ -275,7 +275,10 @@
 
     function tryFactor(expr) {
       // Attempt basic factoring for monic/general quadratics ax^2+bx+c via root-finding.
-      const m = expr.replace(/\s+/g, "").match(/^([+-]?\d*)x\^2([+-]\d*)x?([+-]\d+)?$/i);
+      // The linear term is optional as a whole: "x^2-4" must parse as b = 0, c = -4.
+      // Previously only the trailing "x" was optional, so "-4" was captured as the
+      // linear coefficient and the constant fell through as 0.
+      const m = expr.replace(/\s+/g, "").match(/^([+-]?\d*)x\^2(?:([+-]\d*)x)?([+-]\d+)?$/i);
       if (m) {
         const a = m[1] === "" || m[1] === "+" ? 1 : m[1] === "-" ? -1 : parseFloat(m[1]);
         const b = m[2] ? (m[2] === "+" || m[2] === "-" ? parseFloat(m[2] + "1") : parseFloat(m[2])) : 0;
