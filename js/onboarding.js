@@ -56,6 +56,23 @@
     const panel = document.getElementById("onboarding");
     initPersonalize();
 
+    // Wire the controls up before the early return below. reopen() can show this
+    // panel long after init() ran, and binding inside the not-yet-onboarded branch
+    // meant a replayed tour had dead Continue/Skip buttons and a scroll-locked
+    // page with no way out short of reloading.
+    document.getElementById("onboarding-next").addEventListener("click", () => {
+      if (currentScreen < TOTAL_SCREENS - 1) {
+        currentScreen += 1;
+        showScreen(currentScreen);
+      } else {
+        completeOnboarding();
+      }
+    });
+    document.getElementById("onboarding-skip").addEventListener("click", completeOnboarding);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !panel.hidden) completeOnboarding();
+    });
+
     if (onboarded) {
       panel.hidden = true;
       maybeShowPersonalize();
@@ -66,16 +83,6 @@
     document.body.style.overflow = "hidden";
     showScreen(0);
     NexoraUtils.renderIcons(panel);
-
-    document.getElementById("onboarding-next").addEventListener("click", () => {
-      if (currentScreen < TOTAL_SCREENS - 1) {
-        currentScreen += 1;
-        showScreen(currentScreen);
-      } else {
-        completeOnboarding();
-      }
-    });
-    document.getElementById("onboarding-skip").addEventListener("click", completeOnboarding);
   }
 
   global.OnboardingManager = { init, reopen() {
@@ -85,5 +92,8 @@
     panel.hidden = false;
     document.body.style.overflow = "hidden";
     showScreen(0);
+    // init() renders the icons on first run; a replay needs the same treatment
+    // or the panel comes back with empty icon slots.
+    NexoraUtils.renderIcons(panel);
   } };
 })(window);
