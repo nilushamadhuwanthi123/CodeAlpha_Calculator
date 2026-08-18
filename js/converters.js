@@ -66,7 +66,11 @@
       compute();
     }
 
-    function compute() {
+    // `record` must be opt-in. compute() also runs on view load and on every
+    // debounced keystroke, so recording unconditionally meant simply opening
+    // Converters wrote "1 m -> km" to History, and typing "1234" wrote four
+    // more entries. Only a finished conversion should be saved.
+    function compute(record = false) {
       const cat = catSel.value;
       const val = parseFloat(valueInput.value);
       if (isNaN(val)) { outputInput.value = ""; return; }
@@ -79,6 +83,7 @@
         result = base / units[toSel.value];
       }
       outputInput.value = NexoraUtils.formatNumber(result, 6);
+      if (!record) return;
       AppState.addHistory({
         expression: `${val} ${fromSel.value} → ${toSel.value}`,
         result: `${outputInput.value} ${toSel.value}`,
@@ -88,12 +93,16 @@
     }
 
     catSel.addEventListener("change", populateUnits);
-    fromSel.addEventListener("change", compute);
-    toSel.addEventListener("change", compute);
-    valueInput.addEventListener("input", NexoraUtils.debounce(compute, 200));
+    // Picking a unit or swapping is a deliberate, completed conversion, so those
+    // record. Typing only previews; the value input records on `change`, which
+    // fires on blur or Enter once the user has settled on a number.
+    fromSel.addEventListener("change", () => compute(true));
+    toSel.addEventListener("change", () => compute(true));
+    valueInput.addEventListener("input", NexoraUtils.debounce(() => compute(false), 200));
+    valueInput.addEventListener("change", () => compute(true));
     root.querySelector("#conv-swap").addEventListener("click", () => {
       const f = fromSel.value; fromSel.value = toSel.value; toSel.value = f;
-      compute();
+      compute(true);
     });
 
     populateUnits();
