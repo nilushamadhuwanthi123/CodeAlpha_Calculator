@@ -27,10 +27,33 @@
     for (let i = 2; i <= n; i++) r *= i;
     return r;
   }
-  function permutation(n, r) { return factorial(n) / factorial(n - r); }
-  function combination(n, r) { return factorial(n) / (factorial(r) * factorial(n - r)); }
+  // These are computed multiplicatively rather than as n! / (r!(n-r)!).
+  // The factorial form overflows to Infinity for n > 170, so Infinity/Infinity
+  // returned NaN for values that are perfectly representable (200C2 = 19900),
+  // and intermediate rounding made exact integers come back fractional
+  // (30C15 came back as 155117519.99999997).
+  function permutation(n, r) {
+    if (!Number.isInteger(n) || !Number.isInteger(r) || n < 0 || r < 0 || r > n) return NaN;
+    let result = 1;
+    for (let i = 0; i < r; i++) result *= n - i;
+    return Math.round(result);
+  }
+  function combination(n, r) {
+    if (!Number.isInteger(n) || !Number.isInteger(r) || n < 0 || r < 0 || r > n) return NaN;
+    r = Math.min(r, n - r); // C(n,r) === C(n,n-r); the smaller r keeps the loop short
+    let result = 1;
+    for (let i = 1; i <= r; i++) result = (result * (n - r + i)) / i;
+    return Math.round(result);
+  }
+  // Folding the binomial coefficient and the powers together term-by-term keeps
+  // every intermediate value in range, so this stays accurate for large n where
+  // combination(n, k) alone would overflow.
   function binomialProbability(n, k, p) {
-    return combination(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
+    if (!Number.isInteger(n) || !Number.isInteger(k) || k < 0 || k > n) return NaN;
+    if (!(p >= 0 && p <= 1)) return NaN;
+    let result = Math.pow(1 - p, n - k);
+    for (let i = 1; i <= k; i++) result *= ((n - k + i) / i) * p;
+    return result;
   }
 
   function renderStatisticsView(root) {
