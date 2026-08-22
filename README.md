@@ -2,6 +2,8 @@
 
 **Calculate. Explore. Understand.**
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-nexora--calculator-16A34A?style=for-the-badge&logo=vercel&logoColor=white)](https://nexora-calculator-nilusha.vercel.app)
+
 NEXORA is a premium, production-quality calculator and mathematics workspace built entirely with vanilla HTML, CSS, and JavaScript. It satisfies the CodeAlpha calculator brief at its core — arithmetic, a real-time display, clear functionality, keyboard support, and a fully responsive UI — and then extends it into a broader personal mathematics workspace: scientific functions, graphing, equation solving, matrices, statistics, converters, a formula library, study mode, and a local rule-based math assistant.
 
 ## CodeAlpha Internship
